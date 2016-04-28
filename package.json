@@ -1,0 +1,23 @@
+{
+  "name": "onesignal_Push",
+  "description": "Script for sending push notifications via onesignal",
+  "version": "1.0.0",
+  "main": "app.js",
+  "dependencies": {
+    "async": "^1.5.2",
+    "cron": "^1.1.0",
+    "express":"*",
+    "http-auth": "*",
+    "https": "^1.0.0",
+    "request": "^2.71.0",
+    "scribe-js":"*",
+    "underscore": "^1.8.3",
+    "xml2js": "^0.4.16"
+  },
+  "license": "UNLICENSED",
+  "private": true,
+  "repository" : {
+   "type" : "git",
+   "url" : "https://github.com/npm/npm.git"
+  }
+}
