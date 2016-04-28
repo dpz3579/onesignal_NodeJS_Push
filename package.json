@@ -18,6 +18,6 @@
   "private": true,
   "repository" : {
    "type" : "git",
-   "url" : "https://github.com/npm/npm.git"
+   "url" : "https://github.com/dpz3579/onesignal_NodeJS_Push.git"
   }
 }
