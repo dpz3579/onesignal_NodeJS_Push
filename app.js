@@ -26,7 +26,7 @@ app.get('/', function (req, res) {
 // message predefined structure just missing is text
 var message = { 
   app_id: "c4ec5a38-cefa-42a1-9783-c103cf6d96fb",
-  headings: {"en": "PlayWin Notifications"},
+  headings: {"en": "My Notifications"},
   small_icon: "notification",
   large_icon: "icon"
 };
@@ -34,13 +34,13 @@ var message = {
 
 // the notitifaction sheet with all game id & names
 var notifyScheduleSheet = [
-  {"GameID" : 1,"Game_Name" : "Thursday Super Lotto"},
-  {"GameID" : 2,"Game_Name" : "ThunderBall"},
-  {"GameID" : 3,"Game_Name" : "Fast Digit Lottery"},
-  {"GameID" : 4,"Game_Name" : "Saturday Super Lotto"},
-  {"GameID" : 5,"Game_Name" : "Jaldi 5 Lottery"},
-  {"GameID" : 9,"Game_Name" : "Playwin Keno"},
-  {"GameID" : 11,"Game_Name" : "Jaldi 5 double lotto"},
+  {"GameID" : 1,"Game_Name" : "Game name 1"},
+  {"GameID" : 2,"Game_Name" : "Game name 2"},
+  {"GameID" : 3,"Game_Name" : "Game name 3"},
+  {"GameID" : 4,"Game_Name" : "Game name 4"},
+  {"GameID" : 5,"Game_Name" : "Game name 5"},
+  {"GameID" : 9,"Game_Name" : "Game name 5"},
+  {"GameID" : 11,"Game_Name" : "Game name 7"},
 ]
 
 
@@ -97,40 +97,23 @@ function getDateForCheck(){
 
 // get reuslt and match with our date if matches fire the notification
 function sendPushForResults(datestmp){
-  request('https://www.myplaywin.com/PlaywinResultXML.aspx', function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      parseString(body, function (err, result) {
-        var respData = _.find(result.Results.GameResult, function(data){return data.DrawDate[0] == datestmp ;});
-        if(respData != undefined){
-          console.info("Sending result >>>> "+respData.Game[0]+" -- "+respData.Result[0]+" -- "+respData.DrawDate[0]+" -- "+respData.NextDrawDate[0]+" -- "+respData.NextFirstPrize[0]+" -- "+respData.FirstPrizeHit[0]);
-          message.contents = {"en": "Today's "+respData.Game[0]+"\nResult "+respData.DrawDate[0]+" : "+respData.Result[0]+"\nFirst prize "+ ((respData.FirstPrizeHit[0] == "No") ? "Not Hit" : "Hit")+"\nNext draw of Rs "+respData.NextFirstPrize[0]+" on "+respData.NextDrawDate[0]},
-          sendNotification(message);
-        }
-      });
-    }
-  });
+    console.info("Sending result >>>> ");
+    message.contents = {"en": "Today's msg"},
+    sendNotification(message);
 }
 
 // get the playwin game listing info & create messgae as per game id & fire notification.
 function sendPushForGame(id){
-  request('https://www.myplaywin.com/PlaywinDrawXML.aspx?GameID=0', function (error, response, body) {
-    if (!error && response.statusCode == 200) {
-      parseString(body, function (err, result) {
-        var game_data = _.find(result.Draws.Draw, function(data){return data.GameID[0] == id; });
-        var gameName = _.findWhere(notifyScheduleSheet,{"GameID":id}).Game_Name;
-        console.info("push daily notification debug >>>> Sending notification for game %s of amount %s",gameName,game_data.JackpotAmount[0]);
-        message.contents = {"en": "Play the Game "+gameName+" and you can win "+game_data.JackpotAmount[0]},
-        sendNotification(message);
-      });
-    }
-  });
+    console.info("push daily notification debug >>>> ");
+    message.contents = {"en": "Play the Game "},
+    sendNotification(message);
 }
 
 // core function to send notification
 var sendNotification = function(data) {
   var headers = {
     "Content-Type": "application/json",
-    "Authorization": "Basic YWE1OWY3MjYtNzNkNy00YjhiLThjNjMtNTU1M2NkNzU0YmFj"
+    "Authorization": "auth code herer" // eg : "Basic YWE1OWY3MjYtNzNkNy00YjhiLThjNjMtNTU1M2NkNzU0YmFjgh"
   };
   var options = {
     host: "onesignal.com",
